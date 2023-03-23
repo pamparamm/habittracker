@@ -13,35 +13,36 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.pamparamm.habittracker.domain.Habit
-import com.pamparamm.habittracker.ui.habits.HabitEditorView
+import com.pamparamm.habittracker.ui.pages.HabitEditorPageView
 import com.pamparamm.habittracker.ui.navigation.TopBarView
-import com.pamparamm.habittracker.ui.habits.HabitsListView
 import com.pamparamm.habittracker.ui.pages.AboutPageView
 import com.pamparamm.habittracker.ui.navigation.SideDrawerView
 import com.pamparamm.habittracker.ui.pages.HabitsPageView
 import com.pamparamm.habittracker.ui.theme.Icons
 import kotlinx.coroutines.launch
+import java.util.UUID
 
 @Composable
 fun MainView(
     modifier: Modifier = Modifier,
     startDestination: String = "habits",
 ) {
+    fun toUUIDOrNull(uuidString: String?): UUID =
+        if (uuidString == null || uuidString == "null") UUID.fromString("00000000-0000-0000-0000-000000000000") else UUID.fromString(
+            uuidString
+        )
+
     val scaffoldState = rememberScaffoldState()
     val navController = rememberNavController()
     val scope = rememberCoroutineScope()
     val habits = remember { mutableStateListOf<Habit>() }
-    val showHideScaffold: () -> Unit = { scope.launch { scaffoldState.drawerState.apply { if (isClosed) open() else close() } } }
-    Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        scaffoldState = scaffoldState,
-        topBar = {
-            TopBarView(title = "Habit Tracker", buttonIcon = Icons.Menu, onClick = showHideScaffold)
-        },
-        drawerContent = {
-            SideDrawerView(navController, showHideScaffold, Modifier.fillMaxWidth())
-        }
-    ) { paddingValues ->
+    val showHideScaffold: () -> Unit =
+        { scope.launch { scaffoldState.drawerState.apply { if (isClosed) open() else close() } } }
+    Scaffold(modifier = Modifier.fillMaxSize(), scaffoldState = scaffoldState, topBar = {
+        TopBarView(title = "Habit Tracker", buttonIcon = Icons.Menu, onClick = showHideScaffold)
+    }, drawerContent = {
+        SideDrawerView(navController, showHideScaffold, Modifier.fillMaxWidth())
+    }) { paddingValues ->
         Column(
             modifier = Modifier.padding(paddingValues)
         ) {
@@ -51,11 +52,13 @@ fun MainView(
                 startDestination = startDestination,
             ) {
                 composable(route = "habits") { HabitsPageView(habits = habits, navController) }
-                composable(route = "habits/{habitIndex}") { bse -> HabitEditorView(
-                    habits = habits,
-                    selectedIndex = bse.arguments?.getString("habitIndex"),
-                    navController
-                ) }
+                composable(route = "habits/{habitIndex}") { bse ->
+                    HabitEditorPageView(
+                        habits,
+                        selectedIndex = toUUIDOrNull(bse.arguments?.getString("habitIndex")),
+                        navController
+                    )
+                }
                 composable(route = "about") { AboutPageView() }
             }
         }

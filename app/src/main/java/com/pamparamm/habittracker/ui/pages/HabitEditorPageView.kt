@@ -1,4 +1,4 @@
-package com.pamparamm.habittracker.ui.habits
+package com.pamparamm.habittracker.ui.pages
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -19,27 +19,28 @@ import androidx.navigation.NavController
 import com.pamparamm.habittracker.domain.Habit
 import com.pamparamm.habittracker.domain.HabitPriority
 import com.pamparamm.habittracker.domain.HabitType
+import java.util.UUID
 
 @Composable
-fun HabitEditorView(
+fun HabitEditorPageView(
     habits: SnapshotStateList<Habit>,
-    selectedIndex: String?,
+    selectedIndex: UUID,
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
-    val selectedIndex = selectedIndex?.toInt()
-    val existingHabit = selectedIndex != null && selectedIndex != -1
-    val habitToEdit =
-        remember { mutableStateOf(if (existingHabit) habits[selectedIndex!!] else Habit()) }
+    val isNewHabit = remember { mutableStateOf(false) }
+    val habitToEdit = remember {
+        mutableStateOf(getHabit(habits, selectedIndex) ?: Habit().also {
+            isNewHabit.value = true
+        })
+    }
     Column(modifier) {
         Row(Modifier.fillMaxWidth()) {
-            TextField(
-                value = habitToEdit.value.title,
+            TextField(value = habitToEdit.value.title,
                 onValueChange = { habitToEdit.value = habitToEdit.value.copy(title = it) })
         }
         Row(Modifier.fillMaxWidth()) {
-            TextField(
-                value = habitToEdit.value.description,
+            TextField(value = habitToEdit.value.description,
                 onValueChange = { habitToEdit.value = habitToEdit.value.copy(description = it) })
         }
         Row(Modifier.fillMaxWidth()) {
@@ -53,9 +54,23 @@ fun HabitEditorView(
         }
         Spacer(Modifier.weight(1f))
         Row {
+            if (!isNewHabit.value) {
+                Button(
+                    onClick = {
+                        removeHabit(habits, selectedIndex)
+                        navController.navigate("habits")
+                    }, Modifier.fillMaxWidth()
+                ) {
+                    Text("Delete habit")
+                }
+            }
+        }
+        Row {
             Button(onClick = {
-                if (existingHabit) habits.set(selectedIndex!!, habitToEdit.value) else habits.add(
-                    habitToEdit.value
+                if (!isNewHabit.value) replaceHabit(
+                    habits, selectedIndex, habitToEdit.value
+                ) else appendHabit(
+                    habits, habitToEdit.value
                 )
                 navController.navigate("habits")
             }, Modifier.fillMaxWidth()) {
@@ -77,14 +92,13 @@ fun HabitEditorPriorityView(habit: MutableState<Habit>) {
             )
         }
         DropdownMenu(expanded = expanded.value, onDismissRequest = { expanded.value = true }) {
-            priorities
-                .map {
-                    DropdownMenuItem(onClick = {
-                        habit.value = habit.value.copy(priority = it); expanded.value = false
-                    }) {
-                        Text(text = it.toString())
-                    }
+            priorities.map {
+                DropdownMenuItem(onClick = {
+                    habit.value = habit.value.copy(priority = it); expanded.value = false
+                }) {
+                    Text(text = it.toString())
                 }
+            }
         }
     }
 }
@@ -96,8 +110,7 @@ fun HabitEditorTypeView(habit: MutableState<Habit>) {
         Row {
             types.map {
                 Text(text = it.toString())
-                RadioButton(
-                    selected = habit.value.type == it,
+                RadioButton(selected = habit.value.type == it,
                     onClick = { habit.value = habit.value.copy(type = it) })
             }
         }
@@ -123,3 +136,13 @@ fun HabitEditorFrequencyView(habit: MutableState<Habit>) {
         )
     }
 }
+
+private fun getHabit(habits: SnapshotStateList<Habit>, habitIndex: UUID?): Habit? =
+    habits.find { habit -> habit.id == habitIndex }
+
+private fun appendHabit(habits: SnapshotStateList<Habit>, newHabit: Habit) = habits.add(newHabit)
+private fun removeHabit(habits: SnapshotStateList<Habit>, habitIndex: UUID?) =
+    habits.removeIf { habit -> habit.id == habitIndex }
+
+private fun replaceHabit(habits: SnapshotStateList<Habit>, habitIndex: UUID?, updatedHabit: Habit) =
+    habits.replaceAll { if (it.id != habitIndex) it else updatedHabit }

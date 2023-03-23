@@ -9,20 +9,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.pamparamm.habittracker.domain.Habit
+import java.util.UUID
 
 @Composable
 fun HabitCardView(
     habit: Habit,
-    index: Int,
     selected: Boolean,
-    onClick: (Int) -> Unit,
+    onClick: (UUID) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
         modifier
             .fillMaxWidth()
             .padding(5.dp)
-            .clickable { onClick.invoke(index) },
+            .clickable { onClick.invoke(habit.id) },
         elevation = 5.dp,
     ) {
         Column(modifier = Modifier.padding(10.dp)) {
