@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">Habit Tracker</string>
+    <string name="habits_list_name">Список привычек</string>
+    <string name="settings_name">Настройки</string>
+    <string name="menu_name">Меню</string>
+    <string name="about_version_name">Название версии</string>
+    <string name="about_version_code">Код версии</string>
+
+    <string name="habit_type_good">Хорошая</string>
+    <string name="habit_type_bad">Плохая</string>
+    <string name="habit_priority_low">Неважная</string>
+    <string name="habit_priority_medium">Обычная</string>
+    <string name="habit_priority_high">Важная</string>
+
+    <string name="habit_create">Создать</string>
+    <string name="habit_edit">Редактировать</string>
+    <string name="habit_delete">Удалить</string>
+
+    <string name="habit_save">Сохранить</string>
+    <string name="habit_cancel">Отмена</string>
 </resources>
