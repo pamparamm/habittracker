@@ -13,7 +13,7 @@ class HabitsEditorUseCaseMiddleware(
         store: Store<HabitsEditorState, HabitsEditorAction>
     ) {
         when (action) {
-            is HabitsEditorAction.InitHabitEditor -> action.habitUUID?.let {
+            is HabitsEditorAction.RetrieveHabit -> action.habitUUID?.let {
                 habitsUseCase.getHabit(it)?.let { habit ->
                     store.dispatch(HabitsEditorAction.EditHabit(habit))
                 } ?: store.dispatch(HabitsEditorAction.CreateHabit)

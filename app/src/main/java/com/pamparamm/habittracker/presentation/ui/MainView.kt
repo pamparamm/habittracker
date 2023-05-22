@@ -20,7 +20,7 @@ import com.pamparamm.habittracker.presentation.ui.pages.HabitsListPageView
 import com.pamparamm.habittracker.presentation.ui.navigation.SideDrawerView
 import com.pamparamm.habittracker.presentation.ui.navigation.TopBarView
 import com.pamparamm.habittracker.presentation.ui.pages.HabitsEditorPageView
-import com.pamparamm.habittracker.presentation.ui.pages.SettingsPageView
+import com.pamparamm.habittracker.presentation.ui.pages.AboutPageView
 import com.pamparamm.habittracker.presentation.ui.theme.Icons
 import com.pamparamm.habittracker.presentation.viewmodel.habitseditor.HabitsEditorViewModel
 import com.pamparamm.habittracker.presentation.viewmodel.habitslist.HabitsListViewModel
@@ -70,7 +70,7 @@ fun MainView(
                     val vm = hiltViewModel<HabitsEditorViewModel>()
                     HabitsEditorPageView(vm, navController)
                 }
-                composable(NavRoutes.SETTINGS) { SettingsPageView() }
+                composable(NavRoutes.ABOUT) { AboutPageView() }
             }
         }
     }

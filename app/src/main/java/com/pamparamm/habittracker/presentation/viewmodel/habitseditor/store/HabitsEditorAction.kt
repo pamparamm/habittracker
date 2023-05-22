@@ -6,7 +6,8 @@ import com.pamparamm.habittracker.presentation.viewmodel.store.Action
 import java.util.UUID
 
 sealed class HabitsEditorAction : Action {
-    data class InitHabitEditor(val habitUUID: UUID?) : HabitsEditorAction()
+    object ResetEditor : HabitsEditorAction()
+    data class RetrieveHabit(val habitUUID: UUID?) : HabitsEditorAction()
     object CreateHabit : HabitsEditorAction()
     data class EditHabit(val habit: Habit) : HabitsEditorAction()
     data class UpdateHabitData(val habitData: HabitsEditorHabitData) : HabitsEditorAction()

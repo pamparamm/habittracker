@@ -7,4 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="good_habit_tint">#334A28</color>
+    <color name="bad_habit_tint">#FF552828</color>
 </resources>

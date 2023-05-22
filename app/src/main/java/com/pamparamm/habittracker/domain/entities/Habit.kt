@@ -19,7 +19,7 @@ data class Habit(
             Habit(
                 UUIDExtensions.emptyUUID(),
                 "Habit",
-                "",
+                "Description",
                 HabitPriority.LOW,
                 HabitType.GOOD,
                 1,

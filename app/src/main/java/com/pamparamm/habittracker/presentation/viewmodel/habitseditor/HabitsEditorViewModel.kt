@@ -11,7 +11,6 @@ import com.pamparamm.habittracker.presentation.viewmodel.habitseditor.store.Habi
 import com.pamparamm.habittracker.presentation.viewmodel.habitseditor.store.HabitsEditorUseCaseMiddleware
 import com.pamparamm.habittracker.presentation.viewmodel.store.Store
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import java.util.UUID
@@ -38,17 +37,19 @@ class HabitsEditorViewModel @Inject constructor(
         initHabitEditor(selectedHabitUUID)
     }
 
-    private fun initHabitEditor(habitUUID: UUID?) =
-        dispatch(HabitsEditorAction.InitHabitEditor(habitUUID))
+    private fun initHabitEditor(habitUUID: UUID?) {
+        dispatch(HabitsEditorAction.RetrieveHabit(habitUUID))
+    }
 
     fun updateHabitData(habitData: HabitsEditorHabitData) =
         dispatch(HabitsEditorAction.UpdateHabitData(habitData))
 
     fun saveHabit() = dispatch(HabitsEditorAction.SaveHabit)
     fun cancel() = dispatch(HabitsEditorAction.Cancel)
+    fun resetEditor() = dispatch(HabitsEditorAction.ResetEditor)
 
     private fun dispatch(action: HabitsEditorAction) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             store.dispatch(action)
         }
     }

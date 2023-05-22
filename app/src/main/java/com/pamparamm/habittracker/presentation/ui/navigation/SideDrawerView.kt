@@ -24,7 +24,11 @@ fun SideDrawerView(
         Divider()
         Button(
             onClick = {
-                navController.navigate(NavRoutes.HABITS_LIST)
+                navController.navigate(NavRoutes.HABITS_LIST) {
+                    popUpTo(NavRoutes.HABITS_LIST) {
+                        inclusive = true
+                    }
+                }
                 showHideScaffold()
             },
             modifier
@@ -33,12 +37,16 @@ fun SideDrawerView(
         }
         Button(
             onClick = {
-                navController.navigate(NavRoutes.SETTINGS)
+                navController.navigate(NavRoutes.ABOUT) {
+                    popUpTo(NavRoutes.HABITS_LIST) {
+                        inclusive = true
+                    }
+                }
                 showHideScaffold()
             },
             modifier
         ) {
-            Text(text = stringResource(R.string.settings_name))
+            Text(text = stringResource(R.string.about_name))
         }
     }
 }

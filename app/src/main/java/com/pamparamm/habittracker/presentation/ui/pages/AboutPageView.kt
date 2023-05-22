@@ -9,7 +9,7 @@ import com.pamparamm.habittracker.BuildConfig
 import com.pamparamm.habittracker.R
 
 @Composable
-fun SettingsPageView() {
+fun AboutPageView() {
     Column {
         Text(stringResource(R.string.app_name))
         Divider()

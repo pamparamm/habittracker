@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Habit Tracker</string>
     <string name="habits_list_name">Список привычек</string>
-    <string name="settings_name">Настройки</string>
+    <string name="about_name">О программе</string>
     <string name="menu_name">Меню</string>
     <string name="about_version_name">Название версии</string>
     <string name="about_version_code">Код версии</string>
@@ -12,10 +12,37 @@
     <string name="habit_priority_medium">Обычная</string>
     <string name="habit_priority_high">Важная</string>
 
-    <string name="habit_create">Создать</string>
-    <string name="habit_edit">Редактировать</string>
-    <string name="habit_delete">Удалить</string>
+    <string name="habits_list_completions">Завершения за период</string>
+    <string name="habits_list_period">Периодичность (в днях)</string>
+    <string name="habits_list_create">Создать</string>
+    <string name="habits_list_sync">Синхронизация с сервером</string>
+    <string name="habits_list_edit">Редактировать</string>
+    <string name="habits_list_delete">Удалить</string>
 
-    <string name="habit_save">Сохранить</string>
-    <string name="habit_cancel">Отмена</string>
+    <string name="habits_list_filter_all">Все привычки</string>
+    <string name="habits_list_filter_good">Хорошие привчки</string>
+    <string name="habits_list_filter_bad">Плохие привычки</string>
+
+    <string name="habits_list_search">Меню поиска</string>
+    <string name="habits_list_search_clear">Очистить поиск</string>
+    <string name="habits_list_search_close">Закрыть меню</string>
+    <string name="habits_list_search_title">Название привычки</string>
+    <string name="habits_list_search_priority">Приоритет</string>
+    <string name="habits_list_search_completion_status">Статус выполнения</string>
+    <string name="habits_list_search_complete">Выполнено</string>
+    <string name="habits_list_search_incomplete">Не выполнено</string>
+    <string name="habits_list_search_unselected">Не выбрано</string>
+
+    <string name="habits_list_message_good_less">Стоит выполнить ещё</string>
+    <string name="habits_list_message_good_ge">Nice!</string>
+    <string name="habits_list_message_bad_less">Можно выполнить ещё</string>
+    <string name="habits_list_message_bad_ge">Хватит это делать</string>
+
+    <string name="habits_editor_title">Название привычки</string>
+    <string name="habits_editor_description">Описание привычки</string>
+    <string name="habits_editor_priority">Приоритет</string>
+    <string name="habits_editor_period">Периодичность (в днях)</string>
+    <string name="habits_editor_target_completions">Цель по выполнениям</string>
+    <string name="habits_editor_save">Сохранить</string>
+    <string name="habits_editor_cancel">Отмена</string>
 </resources>

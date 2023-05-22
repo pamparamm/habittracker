@@ -16,10 +16,7 @@ class HabitsUseCaseImpl @Inject constructor(
     override suspend fun getHabit(uuid: UUID): Habit? = habitsRepository.getHabit(uuid)
 
     override suspend fun createHabit(habit: Habit): Habit {
-        val habitToWrite = habit.copy(
-            id = UUID.randomUUID(),
-            timestamp = timestampService.now()
-        )
+        val habitToWrite = habit.copy(timestamp = timestampService.now())
         habitsRepository.createHabit(habitToWrite)
         return habitToWrite
     }

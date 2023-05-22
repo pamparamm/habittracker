@@ -4,5 +4,5 @@ object NavRoutes {
     const val HABITS_LIST = "habits"
     const val HABITS_EDITOR = "habits-editor"
     const val HABITS_EDITOR_HABIT_UUID = "habit-uuid"
-    const val SETTINGS = "settings"
+    const val ABOUT = "about"
 }
