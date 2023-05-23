@@ -35,11 +35,11 @@ class HabitsListClockMiddleware(
                 val remaining = action.habit.targetCompletions - currentCompletions.count() - 1
                 val message = when (action.habit.type) {
                     HabitType.GOOD ->
-                        if (remaining >= 0) HabitsListMessage.GoodNotCompleted(remaining)
+                        if (remaining > 0) HabitsListMessage.GoodNotCompleted(remaining)
                         else HabitsListMessage.GoodCompleted
 
                     HabitType.BAD ->
-                        if (remaining >= 0) HabitsListMessage.BadNotCompleted(remaining)
+                        if (remaining > 0) HabitsListMessage.BadNotCompleted(remaining)
                         else HabitsListMessage.BadCompleted
                 }
                 store.dispatch(HabitsListAction.PushMessage(message))

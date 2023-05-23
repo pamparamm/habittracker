@@ -60,7 +60,6 @@ import com.pamparamm.habittracker.domain.entities.HabitPriority
 import com.pamparamm.habittracker.domain.entities.HabitType
 import com.pamparamm.habittracker.presentation.ui.extensions.Helpers.nameResource
 import com.pamparamm.habittracker.presentation.ui.extensions.Helpers.normalize
-import com.pamparamm.habittracker.presentation.ui.extensions.Helpers.timestampToString
 import com.pamparamm.habittracker.presentation.ui.extensions.ModifierExtensions.noRippleClickable
 import com.pamparamm.habittracker.presentation.ui.theme.Icons
 import com.pamparamm.habittracker.presentation.viewmodel.habitslist.HabitsListFilterMode
@@ -90,6 +89,7 @@ fun HabitsListPageView(vm: HabitsListViewModel, navController: NavController) {
     val goodHabitCompletedMessage = stringResource(R.string.habits_list_message_good_ge)
     val badHabitNotCompletedMessage = stringResource(R.string.habits_list_message_bad_less)
     val badHabitCompletedMessage = stringResource(R.string.habits_list_message_bad_ge)
+    val errorMessage = stringResource(R.string.habits_list_message_error)
     LaunchedEffect(stateValue) {
         if (stateValue.messages.any()) {
             val toastText = when (val firstMessage = stateValue.messages.first()) {
@@ -97,6 +97,7 @@ fun HabitsListPageView(vm: HabitsListViewModel, navController: NavController) {
                 HabitsListMessage.GoodCompleted -> goodHabitCompletedMessage
                 is HabitsListMessage.BadNotCompleted -> "${badHabitNotCompletedMessage}: ${firstMessage.remaining}"
                 HabitsListMessage.BadCompleted -> badHabitCompletedMessage
+                HabitsListMessage.Error -> errorMessage
             }
             Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show()
 
@@ -116,12 +117,7 @@ fun HabitsListPageView(vm: HabitsListViewModel, navController: NavController) {
             },
             verticalArrangement = Arrangement.SpaceBetween
         ) {
-            Row {
-                Text(text = timestampToString(stateValue.currentTimestamp))
-            }
-            Divider()
             HabitsListTypePager(vm)
-            Divider()
             Row(Modifier.weight(1f)) {
                 HabitsListContainerComponent(vm, stateValue)
             }
@@ -219,6 +215,7 @@ fun HabitsListTypePager(vm: HabitsListViewModel) {
         }
     }
 
+    Divider()
     Row(
         Modifier.padding(16.dp)
     ) {
@@ -254,6 +251,7 @@ fun HabitsListTypePager(vm: HabitsListViewModel) {
             }
         }
     }
+    Divider()
 }
 
 @Composable
@@ -339,10 +337,7 @@ fun HabitCardComponent(habit: Habit, vm: HabitsListViewModel, stateValue: Habits
                         Text(text = "${stringResource(R.string.habits_list_period)}: ${habit.period}")
                         Spacer(modifier = Modifier.height(8.dp))
                         if (isSelected && habit.description.isNotBlank()) {
-                            Text(
-                                text = habit.description.take(30),
-                                style = MaterialTheme.typography.body1
-                            )
+                            Text(text = habit.description.take(30))
                             Divider()
                         }
                     }

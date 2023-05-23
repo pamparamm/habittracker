@@ -129,7 +129,8 @@ fun HabitsEditorContainerComponent(vm: HabitsEditorViewModel, stateValue: Habits
                 value = habitData.period.toString(),
                 onValueChange = {
                     it.toIntOrNull()
-                        ?.let { if (it > 0) vm.updateHabitData(habitData.copy(period = it)) }
+                        ?.let { if (it > 0) vm.updateHabitData(habitData.copy(period = it)) else null }
+                        ?: vm.updateHabitData(habitData.copy(period = 0))
                 },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
@@ -140,7 +141,8 @@ fun HabitsEditorContainerComponent(vm: HabitsEditorViewModel, stateValue: Habits
                 value = habitData.targetCompletions.toString(),
                 onValueChange = {
                     it.toIntOrNull()
-                        ?.let { if (it > 0) vm.updateHabitData(habitData.copy(targetCompletions = it)) }
+                        ?.let { if (it > 0) vm.updateHabitData(habitData.copy(targetCompletions = it)) else null }
+                        ?: vm.updateHabitData(habitData.copy(targetCompletions = 0))
                 },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
