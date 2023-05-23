@@ -61,7 +61,11 @@ class HabitsListViewModel @Inject constructor(
 
     private fun dispatch(action: HabitsListAction) {
         viewModelScope.launch {
-            store.dispatch(action)
+            try {
+                store.dispatch(action)
+            } catch (e: Exception) {
+                store.dispatch(HabitsListAction.PushMessage(HabitsListMessage.Error))
+            }
         }
     }
 }

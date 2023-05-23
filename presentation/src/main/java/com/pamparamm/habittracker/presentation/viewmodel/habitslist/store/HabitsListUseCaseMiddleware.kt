@@ -37,8 +37,10 @@ class HabitsListUseCaseMiddleware(
                     store.dispatch(HabitsListAction.PushCompletionMessage(it))
                 }
 
-            HabitsListAction.SyncWithRemote ->
+            HabitsListAction.SyncWithRemote -> {
                 habitsUseCase.syncWithRemote()
+                store.dispatch(HabitsListAction.DeselectHabit)
+            }
 
             else -> {}
         }

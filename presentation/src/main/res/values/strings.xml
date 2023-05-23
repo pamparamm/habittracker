@@ -37,6 +37,7 @@
     <string name="habits_list_message_good_ge">Nice!</string>
     <string name="habits_list_message_bad_less">Можно выполнить ещё</string>
     <string name="habits_list_message_bad_ge">Хватит это делать</string>
+    <string name="habits_list_message_error">Что-то пошло не так</string>
 
     <string name="habits_editor_title">Название привычки</string>
     <string name="habits_editor_description">Описание привычки</string>
